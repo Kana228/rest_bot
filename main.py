@@ -78,6 +78,7 @@ TRANSLATIONS = {
 /start - Start the bot
 /menu - View the menu
 /cart - View your cart
+/contacts - Show contacts
 /help - Show this help message\n\n
 You can also use the buttons in the menu to navigate.""",
         "back_to_menu": "🔙 Back to Menu",
@@ -103,6 +104,7 @@ You can also use the buttons in the menu to navigate.""",
 /start - Начать работу с ботом
 /menu - Просмотреть меню
 /cart - Просмотреть корзину
+/contacts - Показать контакты
 /help - Показать это сообщение помощи\n\n
 Вы также можете использовать кнопки в меню для навигации.""",
         "back_to_menu": "🔙 Назад в Меню",
@@ -386,6 +388,11 @@ async def help_command(message: types.Message):
     user_id = message.from_user.id
     lang = user_languages.get(user_id, "English")
     await message.answer(TRANSLATIONS[lang]["help_text"], parse_mode="Markdown")
+
+@telegram_dp.message(Command("contacts"))
+async def contacts(message: types.Message):
+    await message.answer("Working hours: 15:00 - 23:59\n\nContacts: +77777777777 \nOur location:https://maps.app.goo.gl/XsxWNgDz3s97QSKf7 \nInstagram: https://www.instagram.com/btrest_kata/")
+
 
 async def main():
     await telegram_dp.start_polling(bot)
