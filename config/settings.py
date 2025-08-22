@@ -5,11 +5,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Bot settings
-BOT_TOKEN = os.getenv("MY_API_KEY")
-ADMIN_CHAT_ID = int(os.getenv("ADMIN_CHAT_ID"))
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+ADMIN_CHAT_ID = int(os.getenv("ADMIN_CHAT_ID", "0"))
 
 # File paths
-MENU_EXCEL_PATH = "~/Desktop/git_proj/rest_bot/menu/menu.xlsx"
+MENU_EXCEL_PATH = "assets/menu.xlsx"
 
 # Order states
 ORDER_STATES = [

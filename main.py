@@ -1,17 +1,14 @@
 import asyncio
-import logging
 from aiogram import Bot, Dispatcher
 from aiogram.filters import Command
 from aiogram.types import Message
 
 from config.settings import BOT_TOKEN
+from config.logging_config import setup_logging
 from handlers.menu_handler import MenuHandler
 from handlers.cart_handler import CartHandler
 from handlers.order_handler import OrderHandler
 from utils.translations import TRANSLATIONS
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
 
 async def help_command(message: Message):
     """Show help message"""
@@ -29,11 +26,15 @@ async def contacts(message: Message):
     )
 
 async def main():
+    # Setup logging
+    logger = setup_logging()
+    
     # Initialize bot and dispatcher
     bot = Bot(token=BOT_TOKEN)
     dp = Dispatcher()
 
     # Register handlers
+    logger.info("Registering bot handlers...")
     menu_handler = MenuHandler(bot, dp)
     cart_handler = CartHandler(bot, dp)
     order_handler = OrderHandler(bot, dp)
@@ -41,12 +42,14 @@ async def main():
     menu_handler.register_handlers()
     cart_handler.register_handlers()
     order_handler.register_handlers()
+    logger.info("All handlers registered successfully")
 
     # Register additional commands
     dp.message.register(help_command, Command("help"))
     dp.message.register(contacts, Command("contacts"))
 
     # Start polling
+    logger.info("Starting bot polling...")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
