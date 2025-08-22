@@ -1,0 +1,23 @@
+from dotenv import load_dotenv
+import os
+import telebot
+import sqlite3
+
+
+load_dotenv()
+api = os.getenv("MY_API_KEY")
+bot = telebot.TeleBot(api)
+
+@bot.message_handler(commands=['start'])
+def start(message):
+    conn = sqlite3.connect('pra.sql')
+    cur = conn.cursor()
+
+    query = 'CREATE TABLE IF NOT EXISTS users (id int auto_increment primary key, name varchar(50), pass varchar(50))'
+    cur.execute(query)
+    conn.commit
+    cur.close()
+    cunn.close()
+
+bot.polling(none_stop=True)
+
